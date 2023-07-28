@@ -1,0 +1,68 @@
+h1{
+    font-family: Arial, sans-serif;
+    color: rgb(211,139,24);
+}
+p1{
+    font-family: Arial, sans-serif;
+}
+
+#blockLev{
+    border: 2px solid olive;
+    margin: 20 px;
+
+}
+
+#map {
+    height: 700px;
+    width: 60%;
+    display: block;
+    border: 2px solid peru;
+    margin: 20 px;
+    margin-top: 20 px;
+    padding: 20 px;
+}
+
+#head-desc {
+    width: 100%;
+    padding: 5px;
+    display: block;
+    line-height: 42px;
+    position: relative;
+    bottom: 100;
+    background-color: #6f1400;
+}
+
+#form {
+    position: fixed;
+    top: 150px;
+    right: 0px;
+}
+
+/*style="z-index: 2; position: absolute; top: 0; left: 0; width: 99.5%"*/
+
+#map2 {
+    height: 400px;
+    width: 50%;
+    dipslay: right;
+
+}
+#panel{
+    width: 16%;
+    padding: 20 px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    line-height: 42 px;
+}
+.range-slider{
+    width: 50%;
+}
+#forward {
+    float: right;
+}
+
+#reverse{
+    float: left;
+}
+
+
