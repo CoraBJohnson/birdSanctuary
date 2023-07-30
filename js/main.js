@@ -12,7 +12,4 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/Worl
     maxZoom: 19,
 }).addTo(map);
 
-// //add the zoom control
-// L.control.zoom({
-//     position: 'bottomleft'
-// }).addTo(map);
+
