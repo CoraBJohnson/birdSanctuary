@@ -1,4 +1,28 @@
 //Create Leaflet map
+//function to create map with tile layer
+function createMap() {
+    var map = L.map('map', {
+        center: [39.59, -85.23],
+        zoom: 16,
+        maxZoom:19
+        boxZoom: false,
+        doubleClickZoom: false,
+        keyboard: false,
+        zoomControl: true
+    });
+    //add tile layer
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '&copy; Esri'
+    }).addTo(map);
+
+    //add reference tile layer
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+    }).addTo(map);
+
+    //call getData function within the create map function to add data to map
+    //getData(map);
+
+};
 
 // function createMap(){
 //     //create the map
@@ -14,6 +38,9 @@
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
         maxZoom: 19,
     }).addTo(map);
+
+
+$(document).ready(createMap);
 
 // // function for original symbology with popups
 // function symbolize(data, map){
