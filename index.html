@@ -8,6 +8,18 @@
     <!--external stylesheet link-->
     <link rel="stylesheet" href="lib/leaflet/leaflet.css"/>
     <link rel="stylesheet" href="css/leaflet.draw.css"/>
+
+    <!--arcgis api CSS and JS library-->
+    <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.25/"></script>
+
+    <style>  html,  body,  #viewDiv {  padding: 0;  margin: 0;  height: 100%;  width: 100%;  }  </style>
+    <!--add modules for map app-->
+    <script>
+        require(["esri/config", "esri/Map", "esri/views/MapView"], function(esriConfig, Map, MapView) {
+        });
+    </script>
+
     <link rel="stylesheet" href="css/style.css"/>
 
 </head>
@@ -17,7 +29,9 @@
         <div id="head-desc"> <h1 style="color:white; font-size: 1.8em; text-align: left; line-height: normal; margin-top:1%; margin-bottom: 1%; margin-left:1% ">Mary Gray Bird Sanctuary</h1></div>
         <br>
 
-        <div id="map"></div>
+    <div id="viewDiv"></div>
+
+    <div id="map"></div>
         <br><br><br><br><br>
 
         </div>
