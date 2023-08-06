@@ -31,10 +31,13 @@
         require([
             "esri/config",
             "esri/Map",
-            "esri/views/MapView"
-        ], function(esriConfig, Map, MapView) {
+            "esri/views/MapView",
+            "esri/Graphic",
+            "esri/layers/GraphicsLayer",
+            "esri/layers/FeatureLayer"
+        ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer, FeatureLayer) {
 
-            esriConfig.apiKey="APIKEY";
+            esriConfig.apiKey="APIKey";
             const map = new Map({
                 basemap: "arcgis-imagery"
             });
@@ -44,10 +47,17 @@
                 center: [-85.235, 39.588], // Longitude, latitude
                 zoom: 15, // Zoom level
                 container: "viewDiv", // Div element
-                constraints: {
-                    snapToZoom: false
-                }
             });
+
+            const graphicsLayer = new GraphicsLayer();
+            map.add(graphicsLayer);
+
+            const sanctuaryLayer = new FeatureLayer({
+                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuary/FeatureServer"
+            });
+
+            //add feature layer to map
+            map.add(sanctuaryLayer);
         });
     </script>
 
