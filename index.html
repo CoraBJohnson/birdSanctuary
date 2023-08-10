@@ -18,7 +18,7 @@
         "esri/layers/FeatureLayer"
       ], function(esriConfig, Map, MapView, FeatureLayer) {
 
-        esriConfig.apiKey = "AAPK8b5e89b6abdb4cf59e681ac4b1ef4a1639R-ZEBONVblfVqtCv_mIrYVKQGVD_FDl3X8eCfyhNCTyuvnnQADJtsuLJbNKOBq";
+        esriConfig.apiKey = "APIKey";
         const map = new Map({
           basemap: "arcgis-imagery"
         });
@@ -33,20 +33,20 @@
           const sanctuaryRenderer = {
               "type": "simple",
               "symbol": {
-                  "type": "simple-marker",
+                  "type": "simple-fill",
 
-                  "color": "blue",
+                  "color": "transparent",
                   "outline": {
                       "width": 2,
-                      "color": "white"
+                      "color": "Sienna"
                   }
               }
           };
 
         //create constructors for feature layers and add to map
         const sanctuaryLayer = new FeatureLayer({
-          url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuary/FeatureServer"
-          //renderer: sanctuaryRenderer
+          url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuary/FeatureServer",
+          renderer: sanctuaryRenderer
         });
 
         const facilitiesLayer = new FeatureLayer({
@@ -57,22 +57,34 @@
           url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuaryTrails/FeatureServer"
         });
 
+          const reportsRenderer = {
+              "type": "simple",
+              "symbol": {
+                  "type": "simple-marker",
+                  "color": "orange",
+                  "outline": "white",
+                  "size": "9px",
+              }
+          }
+
         const reportsLayer = new FeatureLayer({
-          url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/trailReports/FeatureServer"
+          url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/trailReports/FeatureServer",
+          renderer: reportsRenderer
         });
 
         const sightingsRenderer = {
             "type": "simple",
             "symbol": {
-                "type": "picture-marker",
-                "url": "https://corabjohnson.github.io/birdSanctuary/lib/birdicon.png",
-                "width": "18px",
-                "height": "18px"
+                "type": "simple-marker",
+                "size": "10px",
+                "color": "PaleGreen",
+                "width": "7px",
+                "height": "7px"
             }
         }
 
         const sightingsLayer = new FeatureLayer({
-          url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/birdSightings/FeatureServer"
+          url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/birdSightings/FeatureServer",
           renderer: sightingsRenderer
         })
 
@@ -113,7 +125,7 @@
     margin-left:1% ">Mary Gray Bird Sanctuary</h1></div>
     <br>
 
-  <div id="viewDiv"></div>
+  <div id="viewDiv" ></div>
 
     <form id="form">
         <label for="Trail">Trail Name</label>
