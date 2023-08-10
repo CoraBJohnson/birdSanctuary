@@ -14,21 +14,21 @@ p1{
 
 #viewDiv {
     padding: 0;
-    margin: 0;
+    margin: 0  ;
     border: 2px solid #6f1400;
     height: 60%;
     width: 60%;  }
 
 
-#map {
-    height: 700px;
-    width: 60%;
-    display: block;
-    border: 2px solid #6f1400;
-    margin: 20 px;
-    margin-top: 20 px;
-    padding: 20 px;
-}
+/*#map {*/
+/*    height: 700px;*/
+/*    width: 60%;*/
+/*    display: block;*/
+/*    border: 2px solid #6f1400;*/
+/*    margin: 20 px;*/
+/*    margin-top: 20 px;*/
+/*    padding: 20 px;*/
+/*}*/
 
 #head-desc {
     width: 100%;

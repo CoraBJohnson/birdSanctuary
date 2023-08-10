@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
     <script src="https://js.arcgis.com/4.25/"></script>
+    <link rel="stylesheet" href="css/style.css"/>
 
     <script>
       require([
@@ -17,7 +18,7 @@
         "esri/layers/FeatureLayer"
       ], function(esriConfig, Map, MapView, FeatureLayer) {
 
-        esriConfig.apiKey = "APIKey";
+        esriConfig.apiKey = "AAPK8b5e89b6abdb4cf59e681ac4b1ef4a1639R-ZEBONVblfVqtCv_mIrYVKQGVD_FDl3X8eCfyhNCTyuvnnQADJtsuLJbNKOBq";
         const map = new Map({
           basemap: "arcgis-imagery"
         });
@@ -29,9 +30,23 @@
           container: "viewDiv" // Div element
         });
 
+          const sanctuaryRenderer = {
+              "type": "simple",
+              "symbol": {
+                  "type": "simple-marker",
+
+                  "color": "blue",
+                  "outline": {
+                      "width": 2,
+                      "color": "white"
+                  }
+              }
+          };
+
         //create constructors for feature layers and add to map
         const sanctuaryLayer = new FeatureLayer({
           url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuary/FeatureServer"
+          //renderer: sanctuaryRenderer
         });
 
         const facilitiesLayer = new FeatureLayer({
@@ -46,8 +61,19 @@
           url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/trailReports/FeatureServer"
         });
 
+        const sightingsRenderer = {
+            "type": "simple",
+            "symbol": {
+                "type": "picture-marker",
+                "url": "https://corabjohnson.github.io/birdSanctuary/lib/birdicon.png",
+                "width": "18px",
+                "height": "18px"
+            }
+        }
+
         const sightingsLayer = new FeatureLayer({
           url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/birdSightings/FeatureServer"
+          //renderer: sightingsRenderer
         })
 
         map.add(sanctuaryLayer);
@@ -78,8 +104,38 @@
 
 </head>
 <body>
+    <div id="head-desc"> <h1 style="color:white;
+    font-size: 1.8em;
+    text-align: left;
+    line-height: normal;
+    margin-top:1%; m
+    argin-bottom: 1%;
+    margin-left:1% ">Mary Gray Bird Sanctuary</h1></div>
+    <br>
 
   <div id="viewDiv"></div>
+
+    <form id="form">
+        <label for="Trail">Trail Name</label>
+        <select name="Trail" id="Trail">
+            <option value="selectTrail">Select</option>
+            <option value="Trail1">Wildflower</option>
+            <option value="Trail2">Beech</option>
+        </select> <br><br>
+
+
+        <label for="description"> Description: </label> <br>
+        <textarea name="description" id="description" cols="40" rows="30" placeholder="Add a description of your sighting"></textarea>
+
+    </form>
+
+    <br>
+
+    <div>The Mary Gray Bird Sanctuary is owned and operated by the Indiana Audubon Society and is located south of Connersville in Fayette County.
+        Alice Green Gray gave the initial 264 acre property to the Indiana Audubon Society in 1943 as a living memorial to her daughter Mary, who preceded her in death.  Congressman Finley H. Gray willed additional property to the society in 1947, bringing the total to more than 600 acres. Gifts from members have allowed the acquisition of more property so that the Sanctuary now occupies more than 700 acres.
+        Visitors are welcome to the property from dawn to dusk. Rustic camping and fishing is available to Indiana Audubon members (check in at Caretaker residence or check in online with Operations Manager prior to arrival).  Join Indiana Audubon Here.
+        Mary Gray Bird Sanctuary needs your help! We are always looking for extra hands to help with projects on the property. If you’re interested in helping out, whether long-term or just for a day, fill out our Indiana Audubon volunteer interest form today!
+    </div>
 
 </body>
 </html>
