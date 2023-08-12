@@ -16,8 +16,9 @@
         "esri/Map",
         "esri/views/MapView",
         "esri/layers/FeatureLayer",
-         "esri/widgets/Editor"
-      ], function(esriConfig, Map, MapView, FeatureLayer, Editor) {
+         "esri/widgets/Editor",
+         "esri/widgets/Legend"
+      ], function(esriConfig, Map, MapView, FeatureLayer, Editor, Legend) {
 
         esriConfig.apiKey = "AAPK8b5e89b6abdb4cf59e681ac4b1ef4a1639R-ZEBONVblfVqtCv_mIrYVKQGVD_FDl3X8eCfyhNCTyuvnnQADJtsuLJbNKOBq";
         const map = new Map({
@@ -26,7 +27,7 @@
 
         const view = new MapView({
           map: map,
-          center: [-85.235, 39.588], // Longitude, latitude
+          center: [-85.229, 39.588], // Longitude, latitude
           zoom: 15, // Zoom level
           container: "viewDiv" // Div element
         });
@@ -60,6 +61,11 @@
             }
         }
 
+          const facilitiesPopup = {
+              title: "{Name}",
+              content: "{FacilityType}"
+          }
+
           const facilitiesLabels = {
               symbol: {
                   type: "text",
@@ -82,7 +88,8 @@
           const facilitiesLayer = new FeatureLayer({
           url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuaryFacilities/FeatureServer",
           renderer: facilitiesRenderer,
-          labelingInfo: [facilitiesLabels]
+          //labelingInfo: [facilitiesLabels],
+          popupTemplate: facilitiesPopup
         });
 
           // const trailsRenderer = {
@@ -95,8 +102,13 @@
           //     }
           // }
 
+          const trailsPopup = {
+              title: "{namealtern}"
+          }
+
           const trailsLayer = new FeatureLayer({
-          url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuaryTrails/FeatureServer"
+          url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuaryTrails/FeatureServer",
+          popupTemplate: trailsPopup
         });
 
         const reportsRenderer = {
@@ -125,9 +137,15 @@
             }
         }
 
+          const sightingsPopup = {
+              title: "Species: {Species}",
+              content: "Date: {Date} <br> Near: {Near} <br> Description: {Description}"
+          }
+
         const sightingsLayer = new FeatureLayer({
           url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/birdSightings/FeatureServer",
-          renderer: sightingsRenderer
+          renderer: sightingsRenderer,
+          popupTemplate: sightingsPopup
         })
 
         map.add(sanctuaryLayer);
@@ -145,7 +163,13 @@
               layerInfos: [pointInfos]
           });
 
-          view.ui.add(editor, "top-right");
+          view.ui.add(editor, "bottom-right");
+
+        const legend = new Legend({
+            view: view
+        })
+
+      view.ui.add(legend, "top-left")
 
       });
     </script>
@@ -160,11 +184,6 @@
         width: 90%;
       }
     </style>
-
-
-
-
-
 
 
 </head>
