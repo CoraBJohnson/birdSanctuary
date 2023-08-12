@@ -15,10 +15,11 @@
         "esri/config",
         "esri/Map",
         "esri/views/MapView",
-        "esri/layers/FeatureLayer"
-      ], function(esriConfig, Map, MapView, FeatureLayer) {
+        "esri/layers/FeatureLayer",
+         "esri/widgets/Editor"
+      ], function(esriConfig, Map, MapView, FeatureLayer, Editor) {
 
-        esriConfig.apiKey = "APIKey";
+        esriConfig.apiKey = "AAPK8b5e89b6abdb4cf59e681ac4b1ef4a1639R-ZEBONVblfVqtCv_mIrYVKQGVD_FDl3X8eCfyhNCTyuvnnQADJtsuLJbNKOBq";
         const map = new Map({
           basemap: "arcgis-imagery"
         });
@@ -38,7 +39,7 @@
                   "color": "transparent",
                   "outline": {
                       "width": 2,
-                      "color": "Sienna"
+                      "color": "#0A3D04"
                   }
               }
           };
@@ -49,15 +50,56 @@
           renderer: sanctuaryRenderer
         });
 
-        const facilitiesLayer = new FeatureLayer({
-          url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuaryFacilities/FeatureServer"
+        const facilitiesRenderer = {
+            "type": "simple",
+            "symbol": {
+                "type": "simple-marker",
+                "color": "grey",
+                "outline": "white",
+                "size": "9px",
+            }
+        }
+
+          const facilitiesLabels = {
+              symbol: {
+                  type: "text",
+                  color: "#FFFFFF",
+                  haloColor: "#5E8D74",
+                  haloSize: "2px",
+                  font: {
+                      size: "12px",
+                      family: "Noto Sans",
+                      style: "italic",
+                      weight: "normal"
+                  }
+              },
+              labelPlacement: "above-center",
+              labelExpressionInfo: {
+                  expression: "$feature.Name"
+              }
+          };
+
+          const facilitiesLayer = new FeatureLayer({
+          url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuaryFacilities/FeatureServer",
+          renderer: facilitiesRenderer,
+          labelingInfo: [facilitiesLabels]
         });
 
-        const trailsLayer = new FeatureLayer({
+          // const trailsRenderer = {
+          //     "type": "simple",
+          //     "symbol": {
+          //         "type": "simple-marker",
+          //         "color": "grey",
+          //         "outline": "white",
+          //         "size": "9px",
+          //     }
+          // }
+
+          const trailsLayer = new FeatureLayer({
           url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuaryTrails/FeatureServer"
         });
 
-          const reportsRenderer = {
+        const reportsRenderer = {
               "type": "simple",
               "symbol": {
                   "type": "simple-marker",
@@ -84,7 +126,7 @@
         }
 
         const sightingsLayer = new FeatureLayer({
-          url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/birdSightings/FeatureServer",
+          url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/birdSighting/FeatureServer",
           renderer: sightingsRenderer
         })
 
@@ -93,6 +135,17 @@
         map.add(trailsLayer);
         map.add(reportsLayer);
         map.add(sightingsLayer);
+
+        const pointInfos = {
+              layer: sightingsLayer
+          }
+
+          const editor = new Editor({
+              view: view,
+              layerInfos: [pointInfos]
+          });
+
+          view.ui.add(editor, "top-right");
 
       });
     </script>
