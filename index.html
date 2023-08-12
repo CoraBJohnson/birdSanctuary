@@ -121,9 +121,15 @@
               }
           }
 
+          const reportsPopup = {
+              title: "Report Type: {ReportType}",
+              content: "Date: {Date} <br> Trail: {Trail} <br> Description: {Description}"
+          }
+
         const reportsLayer = new FeatureLayer({
           url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/trailReports/FeatureServer",
-          renderer: reportsRenderer
+          renderer: reportsRenderer,
+          popupTemplate: reportsPopup
         });
 
         const sightingsRenderer = {
