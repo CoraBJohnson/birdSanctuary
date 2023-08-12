@@ -126,7 +126,7 @@
         }
 
         const sightingsLayer = new FeatureLayer({
-          url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/birdSighting/FeatureServer",
+          url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/birdSightings/FeatureServer",
           renderer: sightingsRenderer
         })
 
@@ -137,7 +137,7 @@
         map.add(sightingsLayer);
 
         const pointInfos = {
-              layer: sightingsLayer
+              layer: sightingsLayer, reportsLayer
           }
 
           const editor = new Editor({
@@ -179,20 +179,7 @@
     <br>
 
   <div id="viewDiv" ></div>
-
-    <form id="form">
-        <label for="Trail">Trail Name</label>
-        <select name="Trail" id="Trail">
-            <option value="selectTrail">Select</option>
-            <option value="Trail1">Wildflower</option>
-            <option value="Trail2">Beech</option>
-        </select> <br><br>
-
-
-        <label for="description"> Description: </label> <br>
-        <textarea name="description" id="description" cols="40" rows="30" placeholder="Add a description of your sighting"></textarea>
-
-    </form>
+    
 
     <br>
 
