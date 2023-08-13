@@ -66,24 +66,24 @@
               content: "{FacilityType}"
           }
 
-          const facilitiesLabels = {
-              symbol: {
-                  type: "text",
-                  color: "#FFFFFF",
-                  haloColor: "#5E8D74",
-                  haloSize: "2px",
-                  font: {
-                      size: "12px",
-                      family: "Noto Sans",
-                      style: "italic",
-                      weight: "normal"
-                  }
-              },
-              labelPlacement: "above-center",
-              labelExpressionInfo: {
-                  expression: "$feature.Name"
-              }
-          };
+          // const facilitiesLabels = {
+          //     symbol: {
+          //         type: "text",
+          //         color: "#FFFFFF",
+          //         haloColor: "#5E8D74",
+          //         haloSize: "2px",
+          //         font: {
+          //             size: "12px",
+          //             family: "Noto Sans",
+          //             style: "italic",
+          //             weight: "normal"
+          //         }
+          //     },
+          //     labelPlacement: "above-center",
+          //     labelExpressionInfo: {
+          //         expression: "$feature.Name"
+          //     }
+          // };
 
           const facilitiesLayer = new FeatureLayer({
           url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuaryFacilities/FeatureServer",
@@ -92,15 +92,141 @@
           popupTemplate: facilitiesPopup
         });
 
-          // const trailsRenderer = {
-          //     "type": "simple",
-          //     "symbol": {
-          //         "type": "simple-marker",
-          //         "color": "grey",
-          //         "outline": "white",
-          //         "size": "9px",
-          //     }
-          // }
+          const trailsRenderer = {
+              "type": "unique-value",
+              "legendOptions": {
+                  title: "Trail"
+              },
+              field: "namealtern",
+              uniqueValueInfos: [{
+                  value: "Trail 1 - Wildflower",
+                  label: "Trail 1",
+                  symbol: {
+                      type: "simple-line",
+                      color: "blue",
+                      width: "2px",
+                      style: "solid"
+                  }
+              }, {
+                  value: "Trail 2 - Beech",
+                  label: "Trail 2",
+                  symbol: {
+                      type: "simple-line",
+                      color: "yellow",
+                      width: "2px",
+                      style: "solid
+                  }
+              },{
+                  value: "Trail 3 - Tulip Poplar",
+                  label: "Trail 3",
+                  symbol: {
+                      type: "simple-line",
+                      color: "red",
+                      width: "2px",
+                      style: "solid
+                  }
+              },{
+                  "value": "Trail 4 - Cardinal",
+                  "label": "Trail 4",
+                  "symbol": {
+                      "type": "simple-line",
+                      "color": "white",
+                      "width": "2px",
+                      "style": "solid
+                  }
+              }, {
+                  "value": "Trail 5 - Woodpecker",
+                  "label": "Trail 5",
+                  "symbol": {
+                      "type": "simple-line",
+                      "color": "green",
+                      "width": "2px",
+                      "style": "solid
+                  }
+              },{
+                  "value": "Trail 6 - Wetland",
+                  "label": "Trail 6",
+                  "symbol": {
+                      "type": "simple-line",
+                      "color": "pink",
+                      "width": "2px",
+                      "style": "solid"
+                  }
+              }, {
+                  "value": "Trail 7 - Prairie",
+                  "label": "Trail 7",
+                  "symbol": {
+                      'type': "simple-line",
+                      'color': "orange",
+                      'width': "2px",
+                      'style': "solid
+                  }
+              },{
+                  'value': "Trail 9 - Woods Loop",
+                  'label': "Trail 9",
+                  'symbol': {
+                      'type': "simple-line",
+                      'color': "grey",
+                      'width': "2px",
+                      'style': "solid
+                  }
+              },{
+                  'value': "8B - Lonicera Memorial Trail",
+                  'label': "Trail 8B",
+                  'symbol': {
+                      'type': "simple-line",
+                      'color': "aqua",
+                      'width': "2px",
+                      'style': "solid
+                  }
+              },{
+                  'value': "8A - Malus Memorial Trail",
+                  'label': "Trail 8A",
+                  'symbol': {
+                      'type': "simple-line",
+                      'color': "black",
+                      'width': "2px",
+                      'style': "solid
+                  }
+          },{
+              'value': "8C - Crataegus Memorial Trail",
+              'label': "Trail 8C",
+              'symbol': {
+                  'type': "simple-line",
+                  'color': "crimson",
+                  'width': "2px",
+                  'style': "solid"
+              }
+          }, {
+              'value': "8D - Viburnum Memorial Trail",
+              'label': "Trail 8D",
+              'symbol': {
+                  'type': "simple-line",
+                  'color': "chartreuse",
+                  'width': "2px",
+                  'style': "solid
+              }
+          },{
+              'value': "8E - Cornus Memorial Trail",
+              label: "Trail 8E",
+              symbol: {
+                  type: "simple-line",
+                  color: "blue",
+                  width: "2px",
+                  style: "solid
+              }
+          },{
+              value: "Trail 10 - Locust",
+              label: "Trail 10",
+              symbol: {
+                  type: "simple-line",
+                  color: "darkorchid",
+                  width: "2px",
+                  style: "solid
+              }
+          }
+              }]
+          };
 
           const trailsPopup = {
               title: "{namealtern}"
@@ -108,7 +234,8 @@
 
           const trailsLayer = new FeatureLayer({
           url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuaryTrails/FeatureServer",
-          popupTemplate: trailsPopup
+          popupTemplate: trailsPopup,
+          renderer: trailsRenderer
         });
 
         const reportsRenderer = {
