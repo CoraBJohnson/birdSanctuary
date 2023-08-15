@@ -1,3 +1,10 @@
+html, body, #viewDiv {height:100%}
+
+body {
+    background-color: #C4C7C6;
+    color: #242424;
+}
+
 h1{
     font-family: Arial, sans-serif;
     color: rgb(211,139,24);
@@ -6,58 +13,95 @@ p1{
     font-family: Arial, sans-serif;
 }
 
+p{
+    position: absolute;
+    /*left: 250px;*/
+    /*top: 250px;*/
+}
+
 #blockLev{
     border: 2px solid olive;
     margin: 20 px;
 
 }
 
-/*#viewDiv {*/
-/*    padding: 10%;*/
-/*    border: 5px solid #6f1400;*/
-/*    height: 60%;*/
-/*    width: 60%;*/
-/*}*/
-
 #viewDiv {
     padding: 0;
     margin: 1%;
-    height: 98%;
+    height: 80%;
     width: 98%;
 }
 
 #head-desc {
-    width: 100%;
+    width: 98%;
     padding: 5px;
     display: block;
     line-height: 42px;
     position: relative;
-    bottom: 100;
+    left: 1%;
     background-color: #6f1400;
 }
 
-#box{
-    border: 2 px solid;
-    height: 300 px;
-    width: 300 px;
-    background-color: tomato;
+#info{
+    padding: 1%;
+    margin: 0;
+    border: 2px;
+    color: #6f1400;
+    position: relative;
+    left: 1%;
+    width: 98%;
+}
 
+#info2{
+    padding: 1%;
+    margin: 0;
+    border: 2px;
+    color: #6f1400;
+    position: relative;
+    left: 1%;
+    width: 98%;
+    outline-color: darkblue;
 }
 
 
-#map2 {
-    height: 400px;
-    width: 50%;
-    dipslay: right;
-
-}
-#panel{
-    width: 16%;
-    padding: 20 px;
+/* Popup container */
+.popup {
+    position: relative;
     display: inline-block;
-    vertical-align: top;
-    text-align: center;
-    line-height: 42 px;
+    cursor: pointer;
 }
 
+/* The actual popup (appears on top) */
+.popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
 
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s
+}

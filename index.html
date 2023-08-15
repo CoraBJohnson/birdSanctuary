@@ -18,8 +18,9 @@
         "esri/views/MapView",
         "esri/layers/FeatureLayer",
          "esri/widgets/Editor",
-         "esri/widgets/Legend"
-      ], function(esriConfig, Map, MapView, FeatureLayer, Editor, Legend) {
+         "esri/widgets/Legend",
+          "esri/widgets/Search"
+      ], function(esriConfig, Map, MapView, FeatureLayer, Editor, Legend, Search) {
 
         esriConfig.apiKey = "AAPK8b5e89b6abdb4cf59e681ac4b1ef4a1639R-ZEBONVblfVqtCv_mIrYVKQGVD_FDl3X8eCfyhNCTyuvnnQADJtsuLJbNKOBq";
         const map = new Map({
@@ -66,25 +67,6 @@
               title: "{Name}",
               content: "{FacilityType}"
           }
-
-          // const facilitiesLabels = {
-          //     symbol: {
-          //         type: "text",
-          //         color: "#FFFFFF",
-          //         haloColor: "#5E8D74",
-          //         haloSize: "2px",
-          //         font: {
-          //             size: "12px",
-          //             family: "Noto Sans",
-          //             style: "italic",
-          //             weight: "normal"
-          //         }
-          //     },
-          //     labelPlacement: "above-center",
-          //     labelExpressionInfo: {
-          //         expression: "$feature.Name"
-          //     }
-          // };
 
           const facilitiesLayer = new FeatureLayer({
           url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuaryFacilities/FeatureServer",
@@ -303,56 +285,149 @@
             view: view
         })
 
-      view.ui.add(legend, "top-left")
+      view.ui.add(legend, "bottom-left");
+
+        //sql selector array
+        const sightingLayerSQL = ["How Many Sightings Of...", "Species = 'Northern Cardinal'", "Species = 'Blue Jay'",  "Near = 'Trail_5'"];
+          let whereClause = sightingLayerSQL[0];
+
+          // Add SQL UI
+          const select = document.createElement("select");
+          select.setAttribute("class", "esri-widget esri-select");
+          select.setAttribute("style", "width: 200px; font-family: 'Avenir Next'; font-size: 1em");
+          sightingLayerSQL.forEach(function(query){
+              let option = document.createElement("option");
+              option.innerHTML = query;
+              option.value = query;
+              select.appendChild(option);
+          });
+
+          view.ui.add(select, "top-right");
+
+          select.addEventListener('change', (event) => {
+              whereClause = event.target.value;
+
+              queryFeatureLayer(view.extent);
+
+          });
+
+          function queryFeatureLayer(extent) {
+
+              const sightingsQuery = {
+                  where: whereClause,  // Set by select element
+                  spatialRelationship: "intersects", // Relationship operation to apply
+                  geometry: extent, // Restricted to visible extent of the map
+                  outFields: ["Date", "Species","Description","Near"], // Attributes to return
+                  returnGeometry: true
+              };
+
+              sightingsLayer.queryFeatures(sightingsQuery)
+
+                  .then((results) => {
+
+                      //console.log("Feature count: " + results.features.length)
+                      displayResults(results);
+
+                  }).catch((error) => {
+                  console.log(error.error);
+              });
+
+          }
+
+          function displayResults(results) {
+
+              alert(results.features.length)
+              // Create a blue polygon
+              const symbol = {
+                  type: "simple-marker",
+                  color: "blue"
+              };
+
+              const queryPopup = {
+                  title: "Bird Sighting",
+                  content: "Species: {Species} <br> Near: {Near} <br> Description: {Description} <br> Date: {Date}"
+              };
+
+              // Assign styles and popup to features
+              results.features.map((feature) => {
+                  feature.symbol = symbol;
+                  feature.popupTemplate = queryPopup;
+                  return feature;
+              });
+
+              // Clear display
+              view.closePopup();
+              view.graphics.removeAll();
+              // Add features to graphics layer
+              view.graphics.addMany(results.features);
+
+          }
+
+          const searchWidget = new Search({
+              view: view
+          });
+// Adds the search widget below other elements in
+// the top left corner of the view
+          view.ui.add(searchWidget, {
+              position: "top-left",
+              index: 2
+          });
+
 
       });
     </script>
 
-    <style>
-      html,
-      body,
-      #viewDiv {
-        padding: 0;
-        margin: 1%;
-        height: 90%;
-        width: 90%;
-      },
-    </style>
-
 
 </head>
 <body>
-    <div id="head-desc"> <h1 style="color:white;
-    font-size: 1.8em;
-    text-align: left;
-    line-height: normal;
-    margin-top:1%;
-    margin-bottom: 1%;
-    margin-left:1% ">Mary Gray Bird Sanctuary</h1></div>
-    <br>
+<!--    <div id="wrapper">-->
+<!--        <div id="head-desc"> <h1 style="color:white;-->
+<!--        font-size: 1.8em;-->
+<!--        text-align: left;-->
+<!--        line-height: normal;-->
+<!--        margin-top:1%;-->
+<!--        margin-bottom: 1%;-->
+<!--        margin-left:1% ">Mary Gray Bird Sanctuary</h1>-->
+
+<!--        <div class ="container-fluid">-->
+<!--            <div class="row">-->
+                <div id="head-desc"> <h1 style="color:white;
+        font-size: 1.8em;
+        text-align: left;
+        line-height: normal;
+        margin-top:1%;
+        margin-bottom: 1%;
+        margin-left:1% ">Mary Gray Bird Sanctuary Bird Sightings</h1> </div>
+
+            <div id="viewDiv" ></div>
+            <div id="info">
+                    The Mary Gray Bird Sanctuary is owned and operated by the Indiana Audubon Society and is located south of Connersville in Fayette County. Alice Green Gray gave the initial 264 acre property to the Indiana Audubon Society in 1943 as a living memorial to her daughter Mary, who preceded her in death.  Congressman Finley H. Gray willed additional property to the society in 1947, bringing the total to more than 600 acres. Gifts from members have allowed the acquisition of more property so that the Sanctuary now occupies more than 700 acres.
+
+                </div>
+
+                <div id="info2">
+                    Visitors are welcome to the property from dawn to dusk. Rustic camping and fishing is available to Indiana Audubon members (check in at Caretaker residence or check in online with Operations Manager prior to arrival).  Join Indiana Audubon Here.
+                    Mary Gray Bird Sanctuary needs your help! We are always looking for extra hands to help with projects on the property. If you’re interested in helping out, whether long-term or just for a day, fill out our Indiana Audubon volunteer interest form today!
+                </div>
 
 
-     <div id="viewDiv" ></div>
-
-    <br>
+            <br>
 
 
 
-    <div> The Mary Gray Bird Sanctuary is owned and operated by the Indiana Audubon Society and is located south of Connersville in Fayette County.</div>
-    <br>
-    <div id="box"> <boxdiv style="border: 2 px solid;
-         height: 300 px;
-         width: 300 px;
-         background-color: tomato;"></div>
-    <div>
-        Alice Green Gray gave the initial 264 acre property to the Indiana Audubon Society in 1943 as a living memorial to her daughter Mary, who preceded her in death.  Congressman Finley H. Gray willed additional property to the society in 1947, bringing the total to more than 600 acres. Gifts from members have allowed the acquisition of more property so that the Sanctuary now occupies more than 700 acres.
-        Visitors are welcome to the property from dawn to dusk. Rustic camping and fishing is available to Indiana Audubon members (check in at Caretaker residence or check in online with Operations Manager prior to arrival).  Join Indiana Audubon Here.
-        Mary Gray Bird Sanctuary needs your help! We are always looking for extra hands to help with projects on the property. If you’re interested in helping out, whether long-term or just for a day, fill out our Indiana Audubon volunteer interest form today!
-    </div>
 
-    <div id="box1"></div>
+
+<!--        </div>-->
+
+<!--        </div>-->
+
+         <!--script-->
+        <script src="js/main1.js"></script>
+
 
 
 
 </body>
+
+
 </html>
