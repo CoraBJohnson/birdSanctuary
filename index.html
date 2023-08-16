@@ -336,7 +336,7 @@
 
           function displayResults(results) {
 
-              alert(results.features.length)
+              alert("Number of Sightings: " + results.features.length)
               // Create a blue polygon
               const symbol = {
                   type: "simple-marker",
@@ -364,7 +364,14 @@
           }
 
           const searchWidget = new Search({
-              view: view
+              view: view,
+              sources: [ {
+                  name: "ArcGIS World Geocoding Service",
+                  placeholder: "example: Nuuk, GRL",
+                  apiKey: "AAPKb07faec798bd45bda269f23f3192a5e2zNnBkAKY2irICX059szhsxpnn0Yhokb_-MNhYpMFgaqSnPA_OZoL-KzqPu8frjgC",
+                  singleLineFieldName: "SingleLine",
+                  url: "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+              }]
           });
 // Adds the search widget below other elements in
 // the top left corner of the view
