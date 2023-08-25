@@ -19,9 +19,8 @@
         "esri/layers/FeatureLayer",
          "esri/widgets/Editor",
          "esri/widgets/Legend",
-          "esri/widgets/Search",
-          "esri/symbols/PictureMarkerSymbol"
-      ], function(esriConfig, Map, MapView, FeatureLayer, Editor, Legend, Search, PictureMarkerSymbol) {
+          "esri/widgets/Search"
+      ], function(esriConfig, Map, MapView, FeatureLayer, Editor, Legend, Search) {
 
         esriConfig.apiKey = "AAPK8b5e89b6abdb4cf59e681ac4b1ef4a1639R-ZEBONVblfVqtCv_mIrYVKQGVD_FDl3X8eCfyhNCTyuvnnQADJtsuLJbNKOBq";
         const map = new Map({
@@ -246,10 +245,9 @@
         const sightingsRenderer = {
             "type": "simple",
             "symbol": {
-                "type": "picture-marker",
-                "url": "https://icon-library.com/images/35-512_7228.png",
-                //"size": "10px",
-                //"color": "PaleGreen",
+                "type": "simple-marker",
+                "size": "10px",
+                "color": "PaleGreen",
                 "width": "7px",
                 "height": "7px"
             }
@@ -406,8 +404,13 @@
         line-height: normal;
         margin-top:1%;
         margin-bottom: 1%;
-        margin-left:1% ">Mary Gray Bird Sanctuary Bird Sightings</h1>
-                    <a href="about.html" target="_blank" style="color: white">About the Sanctuary</a></div>
+        margin-left:1% "><strong>Mary Gray Bird Sanctuary Bird Sightings</strong></h1>
+
+                    <div class="a">
+                    <a href="about.html" target="_blank" style="color: white">About the Sanctuary</a>
+                    </div>
+
+                </div>
 
             <div id="viewDiv" ></div>
 

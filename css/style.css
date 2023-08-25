@@ -19,6 +19,14 @@ p{
     /*top: 250px;*/
 }
 
+div.a{
+    text-align: left;
+    margin-right: 4%;
+    margin-left: 1%;
+    text-decoration-line: underline;
+    text-decoration-color: white;
+}
+
 #blockLev{
     border: 2px solid olive;
     margin: 20 px;
@@ -38,6 +46,7 @@ p{
     display: block;
     line-height: 42px;
     position: relative;
+    top: 1%;
     left: 1%;
     background-color: #6f1400;
 }
@@ -49,7 +58,7 @@ p{
     color: #6f1400;
     position: relative;
     left: 1%;
-    width: 98%;
+    width: 35%;
 }
 
 #info2{
@@ -59,7 +68,7 @@ p{
     color: #6f1400;
     position: relative;
     left: 1%;
-    width: 98%;
+    width: 35%;
     outline-color: darkblue;
 }
 
@@ -105,3 +114,4 @@ p{
     -webkit-animation: fadeIn 1s;
     animation: fadeIn 1s
 }
+
