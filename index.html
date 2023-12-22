@@ -34,6 +34,10 @@
           container: "viewDiv" // Div element
         });
 
+
+
+        //create constructors for ArcGIS Online hosted feature layers with renderers and popups and add to map
+        //sanctuary border
           const sanctuaryRenderer = {
               "type": "simple",
               "symbol": {
@@ -47,12 +51,12 @@
               }
           };
 
-        //create constructors for feature layers and add to map
         const sanctuaryLayer = new FeatureLayer({
           url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/sanctuary/FeatureServer",
           renderer: sanctuaryRenderer
         });
-
+        
+        //facilities
         const facilitiesRenderer = {
             "type": "simple",
             "symbol": {
@@ -75,7 +79,8 @@
           popupTemplate: facilitiesPopup
         });
 
-          const trailsRenderer = {
+        //trails  
+        const trailsRenderer = {
               "type": "unique-value",
               "legendOptions": {
                   'title': "Trail"
@@ -221,6 +226,7 @@
           renderer: trailsRenderer
         });
 
+        //reports
         const reportsRenderer = {
               "type": "simple",
               "symbol": {
@@ -242,6 +248,7 @@
           popupTemplate: reportsPopup
         });
 
+        //sightings
         const sightingsRenderer = {
             "type": "simple",
             "symbol": {
@@ -284,14 +291,16 @@
         const legend = new Legend({
             view: view
         })
-
+      
+      //add legend  
       view.ui.add(legend, "bottom-left");
 
-        //sql selector array
+        //sql query selector array
         const sightingLayerSQL = ["How Many Sightings Of...", "Species = 'Northern Cardinal'", "Species = 'Blue Jay'",  "Near = 'Trail_5'"];
+          //placeholder query text
           let whereClause = sightingLayerSQL[0];
 
-          // Add SQL UI
+          // create and add SQL UI widget
           const select = document.createElement("select");
           select.setAttribute("class", "esri-widget esri-select");
           select.setAttribute("style", "width: 200px; font-family: 'Avenir Next'; font-size: 1em");
@@ -334,6 +343,7 @@
 
           }
 
+          //function to show query results as an alert
           function displayResults(results) {
 
               alert("Number of Sightings: " + results.features.length)
@@ -360,9 +370,9 @@
               view.graphics.removeAll();
               // Add features to graphics layer
               view.graphics.addMany(results.features);
-
           }
 
+          //constructor for search widget
           const searchWidget = new Search({
               view: view,
               sources: [ {
@@ -403,10 +413,6 @@
                 </div>
 
             <div id="viewDiv" ></div>
-
-
-         <!--script-->
-        <script src="js/main1.js"></script>
 
 
 </body>
